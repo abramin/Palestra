@@ -6,6 +6,7 @@ A booking and client management platform for personal trainers and fitness studi
 
 - **[Product Requirements (PRD)](docs/prd.md)** - Full product vision, features, and technical requirements
 - **[Architecture Guide (CLAUDE.md)](CLAUDE.md)** - Development rules, architectural guardrails, and coding standards
+- **[Backlog](docs/backlog.md)** - Issue definitions as thin vertical slices aligned with architecture
 
 ## Architecture
 
