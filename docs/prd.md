@@ -84,6 +84,19 @@ Studios running group classes need real-time capacity enforcement, hold mechanis
 
 ## Technical Requirements
 
+> **Architecture Guide**: See [CLAUDE.md](../CLAUDE.md) for detailed architectural guardrails and development rules.
+
+### Architecture Principles
+
+This project follows **Domain-Driven Design (DDD)** with **CQRS** and **Event-Driven Architecture**:
+
+- **Layered Architecture**: Domain (business logic) → Application (orchestration) → Infrastructure (external integrations)
+- **Rich Domain Models**: Entities encapsulate behavior with private attributes and expressive methods
+- **CQRS**: Separate read (Finders returning ViewModels) and write (Repositories returning Entities) paths
+- **Event Sourcing Ready**: Domain events created in entities, published after transaction commit
+- **Transactional Boundaries**: Managed in Application Layer via UnitOfWork pattern
+- **JSON Primitives**: Commands, Queries, and Events use only primitive types (str, int, float, bool, list, dict, None)
+
 ### Stack Alignment with Fever
 
 **Backend**: Python/Django REST framework  
@@ -126,6 +139,8 @@ audit_log (id, entity_type, entity_id, action, user_id, timestamp, details)
 **TTL**: Hold keys expire with hold timeout. Schedule cache: 5 minutes.
 
 ### Event-Driven Architecture (Kafka/RabbitMQ)
+
+> **Event Design**: Events must be self-contained (carry all necessary data like name, email, timestamps - not just IDs). Use `...RequestedEvent` suffix for events that trigger async side effects. See [CLAUDE.md](../CLAUDE.md) for details.
 
 **Topics/Queues**:
 - `hold.created`, `hold.expired`, `hold.confirmed`
