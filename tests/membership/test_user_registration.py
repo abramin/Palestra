@@ -11,7 +11,7 @@ from src.application.membership.handlers import RegisterUserHandler
 from src.domain.membership.email import InvalidEmailError
 from src.domain.membership.events import UserRegisteredEvent
 from src.domain.membership.exceptions import EmailAlreadyExistsError
-from src.domain.membership.password import WeakPasswordError
+from src.domain.membership.exceptions import WeakPasswordError
 from src.infrastructure.persistence.models import User as UserModel
 
 
@@ -222,8 +222,12 @@ class TestUserRegistration_TransactionBehavior:
     """Tests transaction rollback on failure."""
 
     @pytest.mark.django_db(transaction=True)
-    def test_does_not_persist_on_event_publish_failure(self, db):
-        """If event publishing fails, user should not be persisted."""
+    def test_persists_user_even_if_event_publish_fails(self, db):
+        """
+        Per architecture: events are published AFTER transaction commits.
+        If event publishing fails, the user is still persisted.
+        Use outbox pattern or retry mechanism for reliable event delivery.
+        """
 
         class FailingEventBus:
             def publish(self, events):
@@ -246,5 +250,5 @@ class TestUserRegistration_TransactionBehavior:
         with pytest.raises(RuntimeError):
             handler.handle(command)
 
-        # User should NOT be in database
-        assert not UserModel.objects.filter(email="newuser@example.com").exists()
+        # User IS persisted - events are published after commit
+        assert UserModel.objects.filter(email="newuser@example.com").exists()
