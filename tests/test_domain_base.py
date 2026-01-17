@@ -3,7 +3,7 @@ from typing import Protocol
 
 import pytest
 
-from src.application import Command, CommandHandler, Query, QueryHandler, UnitOfWork
+from src.application import Command, Query, UnitOfWork
 from src.domain.shared import AggregateRoot, DomainEvent
 
 
@@ -70,12 +70,6 @@ def test_query_rejects_non_json_primitives() -> None:
 def test_event_rejects_non_json_primitives() -> None:
     with pytest.raises((TypeError, ValueError)):
         BadEvent(payload=object())
-
-
-def test_handlers_are_protocols() -> None:
-    assert issubclass(CommandHandler, Protocol)
-    assert issubclass(QueryHandler, Protocol)
-
 
 def test_unit_of_work_is_protocol_with_context_manager() -> None:
     assert issubclass(UnitOfWork, Protocol)

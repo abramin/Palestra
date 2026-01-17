@@ -16,8 +16,6 @@ class DomainEvent:
             return True
         except (TypeError, OverflowError):
             return False
-    def fetch(self):
-        raise NotImplementedError("Subclasses must implement this method")
 
 
 class AggregateRoot():

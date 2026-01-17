@@ -16,11 +16,3 @@ class Command:
             return True
         except (TypeError, OverflowError):
             return False
-
-    def execute(self):
-        raise NotImplementedError("Subclasses must implement this method")
-    
-
-class CommandHandler(Protocol):
-    def handle(self, command: Command):
-        raise NotImplementedError("Subclasses must implement this method")
