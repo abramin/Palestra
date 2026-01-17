@@ -1,5 +1,5 @@
 VENV ?= env
-PYTHON_SYSTEM ?= python
+PYTHON_SYSTEM ?= python3
 VENV_PYTHON := $(VENV)/bin/python
 
 PYTHON := $(PYTHON_SYSTEM)
