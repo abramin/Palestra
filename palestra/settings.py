@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     # Third party
     'rest_framework',
     # Local apps
-    'palestra.core',
+    'src.infrastructure.persistence',
 ]
+
+AUTH_USER_MODEL = 'persistence.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
