@@ -5,6 +5,7 @@ Justification: Password validation has multiple strength requirements (length,
 complexity rules) and hashing behavior with many edge cases that are easier to
 test exhaustively in isolation.
 """
+
 import pytest
 
 from src.domain.membership.password import Password, WeakPasswordError
@@ -46,12 +47,12 @@ class TestPasswordValidation_AcceptsStrongPasswords:
         assert password is not None
 
     def test_accepts_password_with_minimum_length(self):
-        password = Password.create("Abcdef1!")  # Exactly 8 chars
+        password = Password.create("Abcdef1!Ghij")  # Exactly 12 chars
         assert password is not None
 
     def test_accepts_password_with_various_special_characters(self):
         for special in ["!", "@", "#", "$", "%", "^", "&", "*"]:
-            password = Password.create(f"Password1{special}")
+            password = Password.create(f"Password1234{special}")
             assert password is not None
 
 

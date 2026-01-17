@@ -5,6 +5,7 @@ Justification: Email validation is a pure domain invariant with many edge cases
 (format validation, normalization) that benefit from exhaustive unit testing.
 Integration tests would add noise without value for these pure validations.
 """
+
 import pytest
 
 from src.domain.membership.email import Email, InvalidEmailError
