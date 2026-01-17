@@ -1,6 +1,5 @@
 from dataclasses import dataclass, fields
 import json
-from typing import Protocol
 
 @dataclass
 class Query:
